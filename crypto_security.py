@@ -1,5 +1,8 @@
 import sys
 from PyQt6 import QtWidgets, QtCore, QtGui
+from PyQt6.QtWidgets import QApplication, QLabel, QVBoxLayout, QPushButton, QHBoxLayout, QWidget
+from PyQt6.QtGui import QClipboard
+from PyQt6.QtCore import QTimer
 
 class CryptoApp(QtWidgets.QWidget):
     def __init__(self):
@@ -83,17 +86,17 @@ class CryptoApp(QtWidgets.QWidget):
         layout.addWidget(self.button)
 
         # ناحیه نمایش نتیجه
-        result_frame = QtWidgets.QFrame()  # ایجاد یک QFrame برای کادر
-        result_frame.setFrameStyle(QtWidgets.QFrame.Shape.Box)  # نوع کادر
+        result_frame = QtWidgets.QFrame()
+        result_frame.setFrameStyle(QtWidgets.QFrame.Shape.NoFrame)
         result_frame.setStyleSheet("""
             QFrame {
                 border: 2px solid #2E86C1;
-                border-radius: 10px;  /* گرد کردن حاشیه */
-                padding: 10px;       /* فضای داخلی کادر */
-                background-color: #F2F3F4;  /* رنگ پس‌زمینه */
+                border-radius: 10px;
+                padding: 10px;
+                background-color: #F2F3F4;
             }
         """)
-        result_layout = QtWidgets.QVBoxLayout()  # لایه عمودی برای متن داخل کادر
+        result_layout = QtWidgets.QVBoxLayout()
 
         self.result_label = QtWidgets.QLabel("Result will be shown here...")
         self.result_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
@@ -103,33 +106,50 @@ class CryptoApp(QtWidgets.QWidget):
         """)
         result_layout.addWidget(self.result_label)
 
-        result_frame.setLayout(result_layout)  # تنظیم لایه داخل QFrame
-        layout.addWidget(result_frame)  # اضافه کردن کادر به لایه اصلی
+        result_frame.setLayout(result_layout)
+        layout.addWidget(result_frame)
 
-        # اضافه کردن فاصله بین کادر نتیجه و فوتر
+        # اضافه کردن فاصله بین نتیجه و فوتر
         spacer = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
         layout.addItem(spacer)
 
         # اضافه کردن فوتر
         footer_layout = QtWidgets.QHBoxLayout()
+        footer_layout.setSpacing(5)  # فاصله بین المان‌ها
+        footer_layout.setContentsMargins(0, 0, 0, 0)  # حذف حاشیه‌های اطراف لایه
 
         # متن Donate
-        donate_label = QtWidgets.QLabel("Support us by donating USDT(trx):")
+        donate_label = QtWidgets.QLabel("Support us by donating USDT(trx): ")
         donate_label.setStyleSheet("""
             font-size: 12px;
             color: #5D6D7E;
+            padding: 0px;
+            margin: 0px;
         """)
         footer_layout.addWidget(donate_label)
 
         # آدرس کیف پول
-        wallet_address = QtWidgets.QLabel("TEDCd37BMNZAgvoc5tZTufFAWQ42UHU7Te")
-        wallet_address.setStyleSheet("""
+        self.wallet_address = QtWidgets.QLabel("TEDCd37BMNZAgvoc5tZTufFAWQ42UHU7Te")
+        self.wallet_address.setStyleSheet("""
             font-size: 12px;
             color: #2E86C1;
+            padding: 0px;
+            margin: 0px;
         """)
-        footer_layout.addWidget(wallet_address)
+        footer_layout.addWidget(self.wallet_address)
 
-        # اضافه کردن فوتر به لایه اصلی
+        # دکمه کپی
+        copy_button = QtWidgets.QPushButton("📋")
+        copy_button.setStyleSheet("""
+            font-size: 12px;
+            padding: 5px;
+            border: none;
+            background-color: transparent;
+            color: #2E86C1;
+        """)
+        copy_button.clicked.connect(self.copy_to_clipboard)
+        footer_layout.addWidget(copy_button)
+
         layout.addLayout(footer_layout)
 
         # تنظیم لایه برای پنجره
@@ -143,6 +163,30 @@ class CryptoApp(QtWidgets.QWidget):
         # نمایش نتیجه
         result = f"Input 1: {input1_text}\nInput 2: {input2_text}"
         self.result_label.setText(result)
+
+    def copy_to_clipboard(self):
+        # کپی کردن متن آدرس به کلیپ‌بورد
+        clipboard = QApplication.clipboard()
+        clipboard.setText(self.wallet_address.text())
+
+        # نمایش پیام "Copied!"
+        self.show_toast("Copied!")
+
+    def show_toast(self, message):
+        # ایجاد یک QLabel برای نمایش پیام
+        toast = QLabel(message, self)
+        toast.setStyleSheet("""
+            background-color: #2E86C1;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+        """)
+        toast.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        toast.setGeometry(10, 10, 100, 30)  # موقعیت و اندازه پیام
+        toast.show()
+
+        # پنهان کردن پیام پس از 2 ثانیه
+        QTimer.singleShot(2000, toast.close)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
