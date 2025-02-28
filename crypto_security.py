@@ -4,6 +4,9 @@ from PyQt6.QtWidgets import QApplication, QLabel, QVBoxLayout, QPushButton, QHBo
 from PyQt6.QtGui import QClipboard
 from PyQt6.QtCore import QTimer
 
+from my_widgets.title_label_program import title_program
+
+
 class CryptoApp(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
@@ -17,15 +20,7 @@ class CryptoApp(QtWidgets.QWidget):
         # ایجاد لایه‌های عمودی
         layout = QtWidgets.QVBoxLayout()
 
-        # متن بزرگ "Crypto Security"
-        title_label = QtWidgets.QLabel("Crypto Security")
-        title_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        title_label.setStyleSheet("""
-            font-size: 24px;
-            font-weight: bold;
-            color: #2E86C1;
-            margin-bottom: 20px;
-        """)
+        title_label = title_program()
         layout.addWidget(title_label)
 
         # فیلد متن اول
@@ -151,6 +146,37 @@ class CryptoApp(QtWidgets.QWidget):
         footer_layout.addWidget(copy_button)
 
         layout.addLayout(footer_layout)
+
+        from PyQt6.QtGui import QDesktopServices
+        from PyQt6.QtCore import QUrl
+
+        # اضافه کردن لینک‌های LinkedIn و GitHub
+        social_layout = QtWidgets.QHBoxLayout()
+        social_layout.setSpacing(10)  # فاصله بین لینک‌ها
+        social_layout.setContentsMargins(0, 0, 0, 0)  # حذف حاشیه‌های اطراف لایه
+
+        # لینک LinkedIn
+        linkedin_label = QtWidgets.QLabel('<a href="https://www.linkedin.com/in/your-linkedin-profile">LinkedIn Me</a>')
+        linkedin_label.setStyleSheet("""
+            font-size: 12px;
+            color: #2E86C1;
+            text-decoration: none;
+        """)
+        linkedin_label.setOpenExternalLinks(True)  # اجازه باز کردن لینک در مرورگر
+        social_layout.addWidget(linkedin_label)
+
+        # لینک GitHub
+        github_label = QtWidgets.QLabel('<a href="https://github.com/your-github-profile">My GitHub</a>')
+        github_label.setStyleSheet("""
+            font-size: 12px;
+            color: #2E86C1;
+            text-decoration: none;
+        """)
+        github_label.setOpenExternalLinks(True)  # اجازه باز کردن لینک در مرورگر
+        social_layout.addWidget(github_label)
+
+        # اضافه کردن لینک‌ها به لایه اصلی
+        layout.addLayout(social_layout)
 
         # تنظیم لایه برای پنجره
         self.setLayout(layout)
