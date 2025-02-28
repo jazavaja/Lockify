@@ -83,25 +83,38 @@ class CryptoApp(QtWidgets.QWidget):
         layout.addWidget(self.button)
 
         # ناحیه نمایش نتیجه
+        result_frame = QtWidgets.QFrame()  # ایجاد یک QFrame برای کادر
+        result_frame.setFrameStyle(QtWidgets.QFrame.Shape.Box)  # نوع کادر
+        result_frame.setStyleSheet("""
+            QFrame {
+                border: 2px solid #2E86C1;
+                border-radius: 10px;  /* گرد کردن حاشیه */
+                padding: 10px;       /* فضای داخلی کادر */
+                background-color: #F2F3F4;  /* رنگ پس‌زمینه */
+            }
+        """)
+        result_layout = QtWidgets.QVBoxLayout()  # لایه عمودی برای متن داخل کادر
+
         self.result_label = QtWidgets.QLabel("Result will be shown here...")
         self.result_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.result_label.setStyleSheet("""
             font-size: 16px;
             color: #27AE60;
-            margin-top: 10px;
         """)
-        layout.addWidget(self.result_label)
+        result_layout.addWidget(self.result_label)
 
-        # اضافه کردن فاصله بین نتیجه و فوتر
-        spacer = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Policy.Minimum,
-                                       QtWidgets.QSizePolicy.Policy.Expanding)
+        result_frame.setLayout(result_layout)  # تنظیم لایه داخل QFrame
+        layout.addWidget(result_frame)  # اضافه کردن کادر به لایه اصلی
+
+        # اضافه کردن فاصله بین کادر نتیجه و فوتر
+        spacer = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
         layout.addItem(spacer)
 
         # اضافه کردن فوتر
         footer_layout = QtWidgets.QHBoxLayout()
 
         # متن Donate
-        donate_label = QtWidgets.QLabel("Support us by donating:")
+        donate_label = QtWidgets.QLabel("Support us by donating USDT(trx):")
         donate_label.setStyleSheet("""
             font-size: 12px;
             color: #5D6D7E;
@@ -109,7 +122,7 @@ class CryptoApp(QtWidgets.QWidget):
         footer_layout.addWidget(donate_label)
 
         # آدرس کیف پول
-        wallet_address = QtWidgets.QLabel("0xYourWalletAddressHere")
+        wallet_address = QtWidgets.QLabel("TEDCd37BMNZAgvoc5tZTufFAWQ42UHU7Te")
         wallet_address.setStyleSheet("""
             font-size: 12px;
             color: #2E86C1;
