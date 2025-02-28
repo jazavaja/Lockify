@@ -27,22 +27,6 @@ class CryptoApp(QtWidgets.QWidget):
         layout.addWidget(title_label)
 
         # فیلد متن اول
-        # self.input1 = QtWidgets.QLineEdit(self)
-        # self.input1.setPlaceholderText("Enter your first input here...")
-        # self.input1.setStyleSheet("""
-        #     QLineEdit {
-        #         padding: 10px;
-        #         font-size: 14px;
-        #         border: 2px solid #2E86C1;
-        #         border-radius: 5px;
-        #         margin-bottom: 10px;
-        #     }
-        #     QLineEdit:focus {
-        #         border-color: #27AE60;
-        #     }
-        # """)
-
-        # فیلد متن اول
         self.input1 = create_input_field("Enter your first input here...")
         layout.addWidget(self.input1)
 
