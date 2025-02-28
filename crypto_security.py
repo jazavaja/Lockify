@@ -1,9 +1,12 @@
 import sys
-from PyQt6 import QtWidgets, QtCore, QtGui
-from PyQt6.QtWidgets import QApplication, QLabel, QVBoxLayout, QPushButton, QHBoxLayout, QWidget
-from PyQt6.QtGui import QClipboard
-from PyQt6.QtCore import QTimer
 
+from PyQt6 import QtWidgets, QtCore
+from PyQt6.QtCore import QTimer
+from PyQt6.QtWidgets import QApplication, QLabel
+
+from logic.main import process_inputs
+from my_widgets.btn_custom import create_button
+from my_widgets.input_str import create_input_field
 from my_widgets.title_label_program import title_program
 
 
@@ -24,60 +27,31 @@ class CryptoApp(QtWidgets.QWidget):
         layout.addWidget(title_label)
 
         # فیلد متن اول
-        self.input1 = QtWidgets.QLineEdit(self)
-        self.input1.setPlaceholderText("Enter your first input here...")
-        self.input1.setStyleSheet("""
-            QLineEdit {
-                padding: 10px;
-                font-size: 14px;
-                border: 2px solid #2E86C1;
-                border-radius: 5px;
-                margin-bottom: 10px;
-            }
-            QLineEdit:focus {
-                border-color: #27AE60;
-            }
-        """)
+        # self.input1 = QtWidgets.QLineEdit(self)
+        # self.input1.setPlaceholderText("Enter your first input here...")
+        # self.input1.setStyleSheet("""
+        #     QLineEdit {
+        #         padding: 10px;
+        #         font-size: 14px;
+        #         border: 2px solid #2E86C1;
+        #         border-radius: 5px;
+        #         margin-bottom: 10px;
+        #     }
+        #     QLineEdit:focus {
+        #         border-color: #27AE60;
+        #     }
+        # """)
+
+        # فیلد متن اول
+        self.input1 = create_input_field("Enter your first input here...")
         layout.addWidget(self.input1)
 
         # فیلد متن دوم
-        self.input2 = QtWidgets.QLineEdit(self)
-        self.input2.setPlaceholderText("Enter your second input here...")
-        self.input2.setStyleSheet("""
-            QLineEdit {
-                padding: 10px;
-                font-size: 14px;
-                border: 2px solid #2E86C1;
-                border-radius: 5px;
-                margin-bottom: 10px;
-            }
-            QLineEdit:focus {
-                border-color: #27AE60;
-            }
-        """)
+        self.input2 = create_input_field("Enter your second input here...")
         layout.addWidget(self.input2)
 
         # دکمه
-        self.button = QtWidgets.QPushButton("Process", self)
-        self.button.setStyleSheet("""
-            QPushButton {
-                background-color: #2E86C1;
-                color: white;
-                font-size: 16px;
-                font-weight: bold;
-                padding: 10px;
-                border: none;
-                border-radius: 5px;
-                margin-bottom: 10px;
-            }
-            QPushButton:hover {
-                background-color: #27AE60;
-            }
-            QPushButton:pressed {
-                background-color: #1E8449;
-            }
-        """)
-        self.button.clicked.connect(self.on_button_click)
+        self.button = create_button("Process", lambda: process_inputs(self.input1.text(), self.input2.text(), self.result_label))
         layout.addWidget(self.button)
 
         # ناحیه نمایش نتیجه
@@ -147,9 +121,6 @@ class CryptoApp(QtWidgets.QWidget):
 
         layout.addLayout(footer_layout)
 
-        from PyQt6.QtGui import QDesktopServices
-        from PyQt6.QtCore import QUrl
-
         # اضافه کردن لینک‌های LinkedIn و GitHub
         social_layout = QtWidgets.QHBoxLayout()
         social_layout.setSpacing(10)  # فاصله بین لینک‌ها
@@ -213,6 +184,7 @@ class CryptoApp(QtWidgets.QWidget):
 
         # پنهان کردن پیام پس از 2 ثانیه
         QTimer.singleShot(2000, toast.close)
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
