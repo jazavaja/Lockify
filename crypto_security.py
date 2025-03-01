@@ -5,9 +5,15 @@ from PyQt6.QtCore import QTimer
 from PyQt6.QtWidgets import QApplication, QLabel
 
 from logic.main import process_inputs
+from my_widgets.about_us_btn import about_us_btn_click
 from my_widgets.btn_custom import create_button
+from my_widgets.copy_btn import copy_btn
+from my_widgets.donate_text import donate_text_widget
+from my_widgets.github_label import github_label_widget
 from my_widgets.input_str import create_input_field
+from my_widgets.linkedin_label import linkedin_label_widget
 from my_widgets.title_label_program import title_program
+from my_widgets.wallet_label import wallet_label
 
 
 class CryptoApp(QtWidgets.QWidget):
@@ -35,7 +41,8 @@ class CryptoApp(QtWidgets.QWidget):
         layout.addWidget(self.input2)
 
         # دکمه
-        self.button = create_button("Process", lambda: process_inputs(self.input1.text(), self.input2.text(), self.result_label))
+        self.button = create_button("Process",
+                                    lambda: process_inputs(self.input1.text(), self.input2.text(), self.result_label))
         layout.addWidget(self.button)
 
         # ناحیه نمایش نتیجه
@@ -71,36 +78,15 @@ class CryptoApp(QtWidgets.QWidget):
         footer_layout.setSpacing(5)  # فاصله بین المان‌ها
         footer_layout.setContentsMargins(0, 0, 0, 0)  # حذف حاشیه‌های اطراف لایه
 
-        # متن Donate
-        donate_label = QtWidgets.QLabel("Support us by donating USDT(trx): ")
-        donate_label.setStyleSheet("""
-            font-size: 12px;
-            color: #5D6D7E;
-            padding: 0px;
-            margin: 0px;
-        """)
+        donate_label = donate_text_widget()
         footer_layout.addWidget(donate_label)
 
         # آدرس کیف پول
-        self.wallet_address = QtWidgets.QLabel("TEDCd37BMNZAgvoc5tZTufFAWQ42UHU7Te")
-        self.wallet_address.setStyleSheet("""
-            font-size: 12px;
-            color: #2E86C1;
-            padding: 0px;
-            margin: 0px;
-        """)
-        footer_layout.addWidget(self.wallet_address)
+        wallet_address = wallet_label()
+        footer_layout.addWidget(wallet_address)
 
         # دکمه کپی
-        copy_button = QtWidgets.QPushButton("📋")
-        copy_button.setStyleSheet("""
-            font-size: 12px;
-            padding: 5px;
-            border: none;
-            background-color: transparent;
-            color: #2E86C1;
-        """)
-        copy_button.clicked.connect(self.copy_to_clipboard)
+        copy_button = copy_btn(wallet_address,self)
         footer_layout.addWidget(copy_button)
 
         layout.addLayout(footer_layout)
@@ -110,25 +96,14 @@ class CryptoApp(QtWidgets.QWidget):
         social_layout.setSpacing(10)  # فاصله بین لینک‌ها
         social_layout.setContentsMargins(0, 0, 0, 0)  # حذف حاشیه‌های اطراف لایه
 
-        # لینک LinkedIn
-        linkedin_label = QtWidgets.QLabel('<a href="https://www.linkedin.com/in/your-linkedin-profile">LinkedIn Me</a>')
-        linkedin_label.setStyleSheet("""
-            font-size: 12px;
-            color: #2E86C1;
-            text-decoration: none;
-        """)
-        linkedin_label.setOpenExternalLinks(True)  # اجازه باز کردن لینک در مرورگر
+        linkedin_label = linkedin_label_widget()
         social_layout.addWidget(linkedin_label)
 
-        # لینک GitHub
-        github_label = QtWidgets.QLabel('<a href="https://github.com/your-github-profile">My GitHub</a>')
-        github_label.setStyleSheet("""
-            font-size: 12px;
-            color: #2E86C1;
-            text-decoration: none;
-        """)
-        github_label.setOpenExternalLinks(True)  # اجازه باز کردن لینک در مرورگر
+        github_label = github_label_widget()
         social_layout.addWidget(github_label)
+
+        aboutus = about_us_btn_click()
+        social_layout.addWidget(aboutus)
 
         # اضافه کردن لینک‌ها به لایه اصلی
         layout.addLayout(social_layout)
@@ -144,30 +119,6 @@ class CryptoApp(QtWidgets.QWidget):
         # نمایش نتیجه
         result = f"Input 1: {input1_text}\nInput 2: {input2_text}"
         self.result_label.setText(result)
-
-    def copy_to_clipboard(self):
-        # کپی کردن متن آدرس به کلیپ‌بورد
-        clipboard = QApplication.clipboard()
-        clipboard.setText(self.wallet_address.text())
-
-        # نمایش پیام "Copied!"
-        self.show_toast("Copied!")
-
-    def show_toast(self, message):
-        # ایجاد یک QLabel برای نمایش پیام
-        toast = QLabel(message, self)
-        toast.setStyleSheet("""
-            background-color: #2E86C1;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-        """)
-        toast.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        toast.setGeometry(10, 10, 100, 30)  # موقعیت و اندازه پیام
-        toast.show()
-
-        # پنهان کردن پیام پس از 2 ثانیه
-        QTimer.singleShot(2000, toast.close)
 
 
 if __name__ == "__main__":
