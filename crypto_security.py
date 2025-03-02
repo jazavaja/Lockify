@@ -45,16 +45,13 @@ class CryptoApp(QtWidgets.QWidget):
         self.input2 = create_input_field("Enter your second input here...")
         layout.addWidget(self.input2, 2, 0, 1, 2)
 
-        # دکمه پردازش
         self.button = create_button("Process")
         self.button.clicked.connect(self.handle_process)
         layout.addWidget(self.button, 3, 0, 1, 2)
 
-        # ویجت نمایش نتیجه
         self.result_label = create_result_label()
         layout.addWidget(self.result_label, 4, 0, 1, 2)
 
-        # فوتر: شامل دکمه کپی، آدرس کیف پول و دکمه‌های اجتماعی
         footer_layout = QtWidgets.QHBoxLayout()
         footer_layout.setSpacing(5)
         footer_layout.setContentsMargins(0, 0, 0, 0)
@@ -72,7 +69,6 @@ class CryptoApp(QtWidgets.QWidget):
 
         layout.addLayout(footer_layout, 5, 0, 1, 2)
 
-        # لینک‌های اجتماعی
         social_layout = QtWidgets.QHBoxLayout()
         social_layout.setSpacing(10)
         social_layout.setContentsMargins(0, 0, 0, 0)
@@ -88,7 +84,6 @@ class CryptoApp(QtWidgets.QWidget):
 
         layout.addLayout(social_layout, 6, 0, 1, 2)
 
-        # تنظیم لایه کلی برای پنجره
         self.setLayout(layout)
 
     def handle_process(self):
