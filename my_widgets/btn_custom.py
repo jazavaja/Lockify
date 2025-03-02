@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import QPushButton
 
-def create_button(text, on_click):
+def create_button(text):
     button = QPushButton(text)
     button.setStyleSheet("""
         QPushButton {
@@ -20,5 +20,5 @@ def create_button(text, on_click):
             background-color: #1E8449;
         }
     """)
-    button.clicked.connect(on_click)
+    # button.clicked.connect(on_click)
     return button

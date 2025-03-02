@@ -1,15 +1,16 @@
 import sys
 
 from PyQt6 import QtWidgets
+from PyQt6.QtCore import Qt
 
 from logic.main import process_inputs
 from my_widgets.about_us_btn import about_us_btn_click
 from my_widgets.btn_custom import create_button
 from my_widgets.copy_btn import copy_btn
 from my_widgets.donate_text import donate_text_widget
-from my_widgets.github_label import github_label_widget
+from my_widgets.github_label import  github_button_widget
 from my_widgets.input_str import create_input_field
-from my_widgets.linkedin_label import linkedin_label_widget
+from my_widgets.linkedin_label import linkedin_button_widget
 from my_widgets.result_label_widget import create_result_label
 from my_widgets.title_label_program import title_program
 from my_widgets.wallet_label import wallet_label
@@ -18,105 +19,80 @@ from my_widgets.wallet_label import wallet_label
 class CryptoApp(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
-        self.initUI()
+        self.input2 = None
+        self.input1 = None
+        self.button = None
+        self.result_label = None
+        self.init_ui()
 
-    def initUI(self):
-        # تنظیمات پنجره
+    def init_ui(self):
         self.setWindowTitle("Crypto Security")
         self.setGeometry(100, 100, 400, 300)
 
-        # ایجاد لایه‌های عمودی
-        layout = QtWidgets.QVBoxLayout()
+        layout = QtWidgets.QGridLayout()
 
+        # عنوان برنامه
         title_label = title_program()
-        layout.addWidget(title_label)
+        layout.addWidget(title_label, 0, 0, 1, 2, Qt.AlignmentFlag.AlignCenter)
 
-        # فیلد متن اول
+        # فیلدهای ورودی
         self.input1 = create_input_field("Enter your first input here...")
-        layout.addWidget(self.input1)
+        layout.addWidget(self.input1, 1, 0, 1, 2)
 
-        # فیلد متن دوم
         self.input2 = create_input_field("Enter your second input here...")
-        layout.addWidget(self.input2)
+        layout.addWidget(self.input2, 2, 0, 1, 2)
 
-        # دکمه
-        self.button = create_button("Process",
-                                    lambda: process_inputs(self.input1.text(), self.input2.text(), self.result_label))
-        layout.addWidget(self.button)
+        # دکمه پردازش
+        self.button = create_button("Process")
+        self.button.clicked.connect(self.handle_process)
+        layout.addWidget(self.button, 3, 0, 1, 2)
 
-        # ناحیه نمایش نتیجه
-        result_frame = QtWidgets.QFrame()
-        result_frame.setFrameStyle(QtWidgets.QFrame.Shape.NoFrame)
-        result_frame.setStyleSheet("""
-            QFrame {
-                border: 2px solid #2E86C1;
-                border-radius: 10px;
-                padding: 10px;
-                background-color: #F2F3F4;
-            }
-        """)
-        result_layout = QtWidgets.QVBoxLayout()
-
+        # ویجت نمایش نتیجه
         self.result_label = create_result_label()
-        result_layout.addWidget(self.result_label)
+        layout.addWidget(self.result_label, 4, 0, 1, 2)
 
-        result_frame.setLayout(result_layout)
-        layout.addWidget(result_frame)
-
-        # اضافه کردن فاصله بین نتیجه و فوتر
-        spacer = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
-        layout.addItem(spacer)
-
-        # اضافه کردن فوتر
+        # فوتر: شامل دکمه کپی، آدرس کیف پول و دکمه‌های اجتماعی
         footer_layout = QtWidgets.QHBoxLayout()
-        footer_layout.setSpacing(5)  # فاصله بین المان‌ها
-        footer_layout.setContentsMargins(0, 0, 0, 0)  # حذف حاشیه‌های اطراف لایه
+        footer_layout.setSpacing(5)
+        footer_layout.setContentsMargins(0, 0, 0, 0)
 
         donate_label = donate_text_widget()
         footer_layout.addWidget(donate_label)
 
-        # آدرس کیف پول
         wallet_address = wallet_label()
         footer_layout.addWidget(wallet_address)
 
-        # دکمه کپی
         copy_button = copy_btn(wallet_address, self)
         footer_layout.addWidget(copy_button)
 
-        layout.addLayout(footer_layout)
+        layout.addLayout(footer_layout, 5, 0, 1, 2)
 
-        # اضافه کردن لینک‌های LinkedIn و GitHub
+        # لینک‌های اجتماعی
         social_layout = QtWidgets.QHBoxLayout()
-        social_layout.setSpacing(10)  # فاصله بین لینک‌ها
-        social_layout.setContentsMargins(0, 0, 0, 0)  # حذف حاشیه‌های اطراف لایه
+        social_layout.setSpacing(10)
+        social_layout.setContentsMargins(0, 0, 0, 0)
 
-        linkedin_label = linkedin_label_widget()
+        linkedin_label = linkedin_button_widget()
         social_layout.addWidget(linkedin_label)
 
-        github_label = github_label_widget()
+        github_label = github_button_widget()
         social_layout.addWidget(github_label)
 
-        aboutus = about_us_btn_click()
-        social_layout.addWidget(aboutus)
+        about_us = about_us_btn_click()
+        social_layout.addWidget(about_us)
 
-        # اضافه کردن لینک‌ها به لایه اصلی
-        layout.addLayout(social_layout)
+        layout.addLayout(social_layout, 6, 0, 1, 2)
 
-        # تنظیم لایه برای پنجره
+        # تنظیم لایه کلی برای پنجره
         self.setLayout(layout)
 
-    def on_button_click(self):
-        # دریافت مقادیر از فیلدهای ورودی
-        input1_text = self.input1.text()
-        input2_text = self.input2.text()
-
-        # نمایش نتیجه
-        result = f"Input 1: {input1_text}\nInput 2: {input2_text}"
-        self.result_label.setText(result)
+    def handle_process(self):
+        process_inputs(self.input1.text(), self.input2.text(), self.result_label)
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
+    app.setStyleSheet(open("stylesheet.qss").read())
     window = CryptoApp()
     window.show()
     sys.exit(app.exec())

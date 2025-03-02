@@ -1,12 +1,13 @@
-from PyQt6.QtWidgets import QLabel
+from PyQt6.QtCore import QUrl
+from PyQt6.QtGui import QDesktopServices
+from PyQt6.QtWidgets import QLabel, QPushButton
 
 
-def github_label_widget():
-    github_label = QLabel('<a href="https://github.com/jazavaja">My GitHub</a>')
-    github_label.setStyleSheet("""
-                font-size: 12px;
-                color: #2E86C1;
-                text-decoration: none;
-            """)
-    github_label.setOpenExternalLinks(True)  # اجازه باز کردن لینک در مرورگر
-    return github_label
+def github_button_widget():
+    # Create a button
+    github_button = QPushButton("My GitHub")
+
+    # Connect the button to open the GitHub link
+    github_button.clicked.connect(lambda: QDesktopServices.openUrl(QUrl("https://github.com/jazavaja")))
+
+    return github_button

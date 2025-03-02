@@ -1,13 +1,13 @@
-from PyQt6.QtWidgets import QLabel
+from PyQt6.QtCore import QUrl
+from PyQt6.QtGui import QDesktopServices
+from PyQt6.QtWidgets import QLabel, QPushButton
 
 
-def linkedin_label_widget():
-    # لینک LinkedIn
-    linkedin_label = QLabel('<a href="https://www.linkedin.com/in/your-linkedin-profile">LinkedIn Me</a>')
-    linkedin_label.setStyleSheet("""
-                font-size: 12px;
-                color: #2E86C1;
-                text-decoration: none;
-            """)
-    linkedin_label.setOpenExternalLinks(True)  # اجازه باز کردن لینک در مرورگر
-    return linkedin_label
+def linkedin_button_widget():
+    # Create a button
+    github_button = QPushButton("Linkedin")
+
+    # Connect the button to open the GitHub link
+    github_button.clicked.connect(lambda: QDesktopServices.openUrl(QUrl("https://github.com/jazavaja")))
+
+    return github_button
