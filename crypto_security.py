@@ -2,6 +2,7 @@ import sys
 
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QIcon
 
 from logic.main import process_inputs
 from my_widgets.about_us_btn import about_us_btn_click
@@ -26,13 +27,15 @@ class CryptoApp(QtWidgets.QWidget):
         self.init_ui()
 
     def init_ui(self):
-        self.setWindowTitle("Crypto Security")
+        title = "Lockify"
+        self.setWindowTitle(title)
         self.setGeometry(100, 100, 400, 300)
+        self.setWindowIcon(QIcon("lockify.ico"))
 
         layout = QtWidgets.QGridLayout()
 
         # عنوان برنامه
-        title_label = title_program()
+        title_label = title_program("lockify.ico")
         layout.addWidget(title_label, 0, 0, 1, 2, Qt.AlignmentFlag.AlignCenter)
 
         # فیلدهای ورودی
@@ -55,6 +58,8 @@ class CryptoApp(QtWidgets.QWidget):
         footer_layout = QtWidgets.QHBoxLayout()
         footer_layout.setSpacing(5)
         footer_layout.setContentsMargins(0, 0, 0, 0)
+
+        layout.setVerticalSpacing(20)
 
         donate_label = donate_text_widget()
         footer_layout.addWidget(donate_label)
