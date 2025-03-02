@@ -1,7 +1,6 @@
 import sys
 
 from PyQt6 import QtWidgets
-from PyQt6.QtCore import Qt
 
 from logic.main import process_inputs
 from my_widgets.about_us_btn import about_us_btn_click
@@ -11,6 +10,7 @@ from my_widgets.donate_text import donate_text_widget
 from my_widgets.github_label import github_label_widget
 from my_widgets.input_str import create_input_field
 from my_widgets.linkedin_label import linkedin_label_widget
+from my_widgets.result_label_widget import create_result_label
 from my_widgets.title_label_program import title_program
 from my_widgets.wallet_label import wallet_label
 
@@ -57,12 +57,7 @@ class CryptoApp(QtWidgets.QWidget):
         """)
         result_layout = QtWidgets.QVBoxLayout()
 
-        self.result_label = QtWidgets.QLabel("Result will be shown here...")
-        self.result_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.result_label.setStyleSheet("""
-            font-size: 16px;
-            color: #27AE60;
-        """)
+        self.result_label = create_result_label()
         result_layout.addWidget(self.result_label)
 
         result_frame.setLayout(result_layout)
