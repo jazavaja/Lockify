@@ -87,7 +87,7 @@ This project is licensed under the **MIT License**.
 For questions, feedback, or collaboration opportunities, feel free to reach out:
 
 - **Developer**: Javad Sarlak
-- **Email**: [javadesnesh@gmail.com](mailto:javadesnesh@gmail.com)
+- **Email**: [javadesmesh@gmail.com](mailto:javadesmesh@gmail.com)
 - **GitHub**: [https://github.com/jazavaja](https://github.com/jazavaja)
 
 ---
