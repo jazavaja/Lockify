@@ -10,6 +10,7 @@ from my_widgets.btn_custom import create_button
 from my_widgets.copy_btn import copy_btn
 from my_widgets.donate_text import donate_text_widget
 from my_widgets.github_label import  github_button_widget
+from my_widgets.help_use_btn import help_use_button_widget
 from my_widgets.input_str import create_input_field
 from my_widgets.linkedin_label import linkedin_button_widget
 from my_widgets.result_label_widget import create_result_label
@@ -45,9 +46,17 @@ class CryptoApp(QtWidgets.QWidget):
         self.input2 = create_input_field("Enter your second input here...")
         layout.addWidget(self.input2, 2, 0, 1, 2)
 
-        self.button = create_button("Process")
-        self.button.clicked.connect(self.handle_process)
-        layout.addWidget(self.button, 3, 0, 1, 2)
+        # ایجاد دکمه اول
+        self.button1 = create_button("Process")
+        self.button1.clicked.connect(self.handle_process)
+
+        # ایجاد دکمه دوم
+        self.button2 =  create_button("Cancel")
+        self.button2.clicked.connect(self.handle_process)
+
+        # اضافه کردن دکمه‌ها به لی‌اوت (هر دو در یک سطر)
+        layout.addWidget(self.button1, 3, 0)  # دکمه اول در ستون 0
+        layout.addWidget(self.button2, 3, 1)  # دکمه دوم در ستون 1
 
         self.result_label = create_result_label()
         layout.addWidget(self.result_label, 4, 0, 1, 2)
@@ -78,6 +87,9 @@ class CryptoApp(QtWidgets.QWidget):
 
         github_label = github_button_widget()
         social_layout.addWidget(github_label)
+
+        help_use = help_use_button_widget()
+        social_layout.addWidget(help_use)
 
         about_us = about_us_btn_click()
         social_layout.addWidget(about_us)

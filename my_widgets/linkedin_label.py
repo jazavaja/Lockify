@@ -8,6 +8,6 @@ def linkedin_button_widget():
     github_button = QPushButton("Linkedin")
 
     # Connect the button to open the GitHub link
-    github_button.clicked.connect(lambda: QDesktopServices.openUrl(QUrl("https://github.com/jazavaja")))
+    github_button.clicked.connect(lambda: QDesktopServices.openUrl(QUrl("https://www.linkedin.com/in/javadsarlak/")))
 
     return github_button
