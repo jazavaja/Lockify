@@ -1,10 +1,10 @@
+import os
 import sys
 
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QWidget, QFrame
-
+from PyQt6.QtWidgets import QWidget, QFrame, QApplication
 
 from logic.main import process_encrypt, process_decrypt
 from my_widgets.about_us_btn import about_us_btn_click
@@ -112,9 +112,27 @@ class CryptoApp(QtWidgets.QWidget):
         process_decrypt(self.input1.text(), self.input2.text(), self.result_label)
 
 
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    app.setStyleSheet(open("stylesheet.qss").read())
+    app = QApplication(sys.argv)
+
+    stylesheet_path = resource_path("stylesheet.qss")
+    try:
+        with open(stylesheet_path, "r") as file:
+            app.setStyleSheet(file.read())
+    except FileNotFoundError:
+        print(f"Error: Unable to find stylesheet at {stylesheet_path}")
+        sys.exit(1)
+
     window = CryptoApp()
     window.show()
     sys.exit(app.exec())
