@@ -33,7 +33,7 @@ class CryptoApp(QtWidgets.QWidget):
     def init_ui(self):
         title = "Lockify"
         self.setWindowTitle(title)
-        self.setGeometry(100, 100, 400, 300)
+        self.setGeometry(100, 100, 500, 300)
         self.setWindowIcon(QIcon("lockify.ico"))
 
         layout = QtWidgets.QGridLayout()
@@ -41,10 +41,10 @@ class CryptoApp(QtWidgets.QWidget):
         title_label = title_program("lockify.ico")
         layout.addWidget(title_label, 0, 0, 1, 2, Qt.AlignmentFlag.AlignCenter)
 
-        self.input1 = create_input_field("Enter your first input here...")
+        self.input1 = create_input_field("Enter the text you want to encrypt or the encrypted data to decrypt")
         layout.addWidget(self.input1, 1, 0, 1, 2)
 
-        self.input2 = create_input_field("Enter your second input here...")
+        self.input2 = create_input_field("Enter the secret key used for encryption/decryption")
         layout.addWidget(self.input2, 2, 0, 1, 2)
 
         self.button1 = create_button("Encrypt")
