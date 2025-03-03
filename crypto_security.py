@@ -3,13 +3,14 @@ import sys
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QWidget, QFrame
 
-from logic.main import process_inputs
+from logic.main import process_encrypt, process_decrypt
 from my_widgets.about_us_btn import about_us_btn_click
 from my_widgets.btn_custom import create_button
 from my_widgets.copy_btn import copy_btn
 from my_widgets.donate_text import donate_text_widget
-from my_widgets.github_label import  github_button_widget
+from my_widgets.github_label import github_button_widget
 from my_widgets.help_use_btn import help_use_button_widget
 from my_widgets.input_str import create_input_field
 from my_widgets.linkedin_label import linkedin_button_widget
@@ -21,6 +22,8 @@ from my_widgets.wallet_label import wallet_label
 class CryptoApp(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
+        self.button2 = None
+        self.button1 = None
         self.input2 = None
         self.input1 = None
         self.button = None
@@ -35,37 +38,40 @@ class CryptoApp(QtWidgets.QWidget):
 
         layout = QtWidgets.QGridLayout()
 
-        # عنوان برنامه
         title_label = title_program("lockify.ico")
         layout.addWidget(title_label, 0, 0, 1, 2, Qt.AlignmentFlag.AlignCenter)
 
-        # فیلدهای ورودی
         self.input1 = create_input_field("Enter your first input here...")
         layout.addWidget(self.input1, 1, 0, 1, 2)
 
         self.input2 = create_input_field("Enter your second input here...")
         layout.addWidget(self.input2, 2, 0, 1, 2)
 
-        # ایجاد دکمه اول
-        self.button1 = create_button("Process")
-        self.button1.clicked.connect(self.handle_process)
+        self.button1 = create_button("Encrypt")
+        self.button1.clicked.connect(self.handle_encrypt)
 
-        # ایجاد دکمه دوم
-        self.button2 =  create_button("Cancel")
-        self.button2.clicked.connect(self.handle_process)
+        self.button2 = create_button("Decrypt")
+        self.button2.clicked.connect(self.handle_decrypt)
 
-        # اضافه کردن دکمه‌ها به لی‌اوت (هر دو در یک سطر)
-        layout.addWidget(self.button1, 3, 0)  # دکمه اول در ستون 0
-        layout.addWidget(self.button2, 3, 1)  # دکمه دوم در ستون 1
+        layout.addWidget(self.button1, 3, 0)
+        layout.addWidget(self.button2, 3, 1)
 
-        self.result_label = create_result_label()
+        self.result_label = create_result_label(self)
         layout.addWidget(self.result_label, 4, 0, 1, 2)
+
+        # ایجاد یک خط تفکیکی
+        separator_line = QFrame()
+        separator_line.setFrameShape(QFrame.Shape.HLine)
+        separator_line.setLineWidth(2)
+        separator_line.setStyleSheet("color: blue;")
+
+        layout.addWidget(separator_line, 5, 0, 1, 2)
 
         footer_layout = QtWidgets.QHBoxLayout()
         footer_layout.setSpacing(5)
-        footer_layout.setContentsMargins(0, 0, 0, 0)
+        footer_layout.setContentsMargins(0, 100, 0, 0)
 
-        layout.setVerticalSpacing(20)
+        # layout.setVerticalSpacing(20) i do not wannt space in all element
 
         donate_label = donate_text_widget()
         footer_layout.addWidget(donate_label)
@@ -98,8 +104,11 @@ class CryptoApp(QtWidgets.QWidget):
 
         self.setLayout(layout)
 
-    def handle_process(self):
-        process_inputs(self.input1.text(), self.input2.text(), self.result_label)
+    def handle_encrypt(self):
+        process_encrypt(self.input1.text(), self.input2.text(), self.result_label)
+
+    def handle_decrypt(self):
+        process_decrypt(self.input1.text(), self.input2.text(), self.result_label)
 
 
 if __name__ == "__main__":
