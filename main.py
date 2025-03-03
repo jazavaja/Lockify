@@ -5,6 +5,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QWidget, QFrame
 
+
 from logic.main import process_encrypt, process_decrypt
 from my_widgets.about_us_btn import about_us_btn_click
 from my_widgets.btn_custom import create_button
