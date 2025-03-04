@@ -4,7 +4,7 @@
 a = Analysis(
     ['main.py'],
     pathex=['.'],
-    datas=[('lockify.ico', '.'), ('stylesheet.qss', '.')],
+    datas=[('lockify.ico', '.'), ('stylesheet.qss', '.'),('lockify.png', '.')],
     hiddenimports=[],
     hookspath=[],
     runtime_hooks=[],
