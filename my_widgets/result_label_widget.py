@@ -20,7 +20,7 @@ class ClickableLabel(QLabel):
         self.setStyleSheet("""
             border: 2px solid #E74C3C;
             background-color: #ECF0F1;
-            color: #E74C3C;
+            color: #000000;
         """)
 
         QTimer.singleShot(2000, self.restore_original_text)
@@ -33,12 +33,12 @@ class ClickableLabel(QLabel):
             padding: 10px;
             background-color: #F2F3F4;
             font-size: 16px;
-            color: #27AE60;
+            color: #000000;
         """)
 
 
 def create_result_label(parent):
-    label = ClickableLabel("Result will be shown here...",parent)
+    label = ClickableLabel("Result Area - Click to Copy",parent)
     label.setAlignment(Qt.AlignmentFlag.AlignCenter)
     label.setStyleSheet("""
         border: 2px solid #2E86C1;
@@ -46,6 +46,11 @@ def create_result_label(parent):
         padding: 10px;
         background-color: #F2F3F4;
         font-size: 16px;
-        color: #27AE60;
+        color: #000000;
     """)
+    label.setWordWrap(True)
+
+    label.setMaximumWidth(450)
+    label.setMinimumHeight(50)
+    label.setMaximumHeight(50)
     return label

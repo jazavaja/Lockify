@@ -36,11 +36,11 @@ class CryptoApp(QtWidgets.QWidget):
         title = "Lockify"
         self.setWindowTitle(title)
         self.setGeometry(100, 100, 500, 300)
-        self.setWindowIcon(QIcon("lockify.ico"))
+        self.setWindowIcon(QIcon("lockify.png"))
 
         layout = QtWidgets.QGridLayout()
 
-        title_label = title_program("lockify.ico")
+        title_label = title_program("lockify.png")
         layout.addWidget(title_label, 0, 0, 1, 2, Qt.AlignmentFlag.AlignCenter)
 
         self.input1 = create_input_field("Enter the text you want to encrypt or the encrypted data to decrypt")

@@ -1,6 +1,6 @@
 # Lockify
 
-![Lockify Logo](lockify.ico) <!-- Replace with your logo path -->
+![Lockify Logo](lockify.png) <!-- Replace with your logo path -->
 
 **Lockify** is a fully offline, open-source encryption tool designed to help individuals and organizations protect their sensitive data using advanced cryptographic techniques. With a focus on privacy and security, Lockify ensures that your data remains private, secure, and under your control.
 
