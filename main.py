@@ -4,8 +4,9 @@ import sys
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QWidget, QFrame, QApplication
+from PyQt6.QtWidgets import QFrame, QApplication
 
+from helper.path_helper import resource_path
 from logic.main import process_encrypt, process_decrypt
 from my_widgets.about_us_btn import about_us_btn_click
 from my_widgets.btn_custom import create_button
@@ -112,16 +113,6 @@ class CryptoApp(QtWidgets.QWidget):
         process_decrypt(self.input1.text(), self.input2.text(), self.result_label)
 
 
-
-def resource_path(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
-    try:
-        # PyInstaller creates a temp folder and stores path in _MEIPASS
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
