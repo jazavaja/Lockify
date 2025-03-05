@@ -1,3 +1,8 @@
+# حذف کامل فایل‌های HTML از آمار زبان‌ها
 *.html linguist-ignore
 
+# حذف کامل فایل‌های TeX از آمار زبان‌ها
 *.tex linguist-ignore
+
+# اطمینان از تشخیص Python به عنوان زبان اصلی
+*.py linguist-detectable
