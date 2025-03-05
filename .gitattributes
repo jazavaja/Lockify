@@ -1,7 +1,3 @@
-*.html linguist-vendored
-
 *.html linguist-ignore
-
-*.tex linguist-vendored
 
 *.tex linguist-ignore
