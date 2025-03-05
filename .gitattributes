@@ -1,0 +1,5 @@
+# حذف فایل‌های HTML از آمار زبان‌ها
+*.html linguist-vendored
+
+# یا اگر می‌خواهید فایل‌های HTML کاملاً نادیده گرفته شوند:
+*.html linguist-ignore
