@@ -40,3 +40,4 @@ def process_decrypt(encrypted_string, seed, result_label):
         result_label.setText(result)
     except Exception as e:
         result_label.setText(f"Error during decryption: {str(e)}")
+
